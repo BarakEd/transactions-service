@@ -21,16 +21,21 @@ let initialArray = [
 ];
 
 const handleGet = (req, res) => {
+  console.log('handle Get, res::', initialArray);
+
     res.status(200).json({ transactions: initialArray});
 };
 
 const handleAdd = (req, res) => {
+  console.log('handle Add, req.body::', req.body);
   initialArray.push({ ...req.body, id: uuid() });
+  console.log('handle Add, res=', initialArray);
 
   res.status(200).json({ transactions: initialArray});
 };
 
 const handleCompress = (req, res) => {
+  console.log('handle compress');
   const compressedArray = initialArray.reduce((acc, item) => {
     const existTransaction = acc.find(trans => {
       return trans.tradingParty === item.tradingParty
@@ -86,6 +91,8 @@ const handleCompress = (req, res) => {
   }, []);
 
   initialArray = compressedArray;
+  console.log('handle Compress, res=', initialArray);
+
   res.status(200).json({ transactions: compressedArray || initialArray});
 };
 
